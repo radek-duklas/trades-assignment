@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -35,7 +36,7 @@ public class TradeRecordsConsumer implements CollectionConsumer<TradeRecordProce
     public void accept(Collection<TradeRecordProcessed> tradeRecords) {
         String currentTimestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("uuuu-MM-dd_HHmmssSSS"));
         Path targetPath = location.resolve(filename + "_" + currentTimestamp);
-        try (var stream = Files.newOutputStream(targetPath, StandardOpenOption.CREATE)) {
+        try (OutputStream stream = Files.newOutputStream(targetPath, StandardOpenOption.CREATE)) {
             objectMapper.writeValue(stream, tradeRecords);
             log.info("Saved {} records into {}", tradeRecords.size(), targetPath);
         } catch (IOException e) {

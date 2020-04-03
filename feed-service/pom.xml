@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.gft.assignment</groupId>
-	<artifactId>feed-service-1</artifactId>
+	<artifactId>feed-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Feed Service 1</name>
-	<description>Downstream Feed Service 1</description>
+	<name>Feed Service</name>
+	<description>Downstream Feed Service</description>
 
 	<properties>
 		<java.version>11</java.version>

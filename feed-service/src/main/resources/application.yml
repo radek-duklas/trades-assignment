@@ -13,7 +13,7 @@ spring:
 
 app:
   kafka:
-    idle-between-polls: 300000
+    idle-between-polls: 60000
 
   trade-records:
     target-location: C:\\tmp\service-A\
