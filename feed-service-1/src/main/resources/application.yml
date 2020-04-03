@@ -3,11 +3,9 @@ app:
     consumer:
       bootstrap.servers: localhost:9092
       max.poll.interval.ms: 300000
+      group.id: group1
     topic: trade-records
     idle-between-polls: 300000
-
-  target-location: C:\\Temp\service-A
-  filename: service-A
 
 ---
 spring:
@@ -17,8 +15,9 @@ app:
   kafka:
     idle-between-polls: 300000
 
-  target-location: C:\\Temp\service-A
-  filename: service-A
+  trade-records:
+    target-location: C:\\tmp\service-A\
+    target-filename: service-A
 
 ---
 spring:
@@ -28,5 +27,6 @@ app:
   kafka:
     idle-between-polls: 60000
 
-  target-location: C:\\Temp\service-B
-  filename: service-B
+  trade-records:
+    target-location: C:\\tmp\service-B\
+    target-filename: service-B

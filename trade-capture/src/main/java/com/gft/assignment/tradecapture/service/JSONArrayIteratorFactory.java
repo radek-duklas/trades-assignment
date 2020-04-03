@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Provides an {@link Iterator} for given JSON file assuming its root element is a JSON array.
@@ -68,10 +67,14 @@ public class JSONArrayIteratorFactory<T> {
         @Override
         public boolean hasNext() {
             try {
-                return jsonParser.nextToken() != JsonToken.END_ARRAY;
+                boolean result = jsonParser.nextToken() != JsonToken.END_ARRAY;
+                if (!result) {
+                    close();
+                }
+                return result;
             } catch (IOException e) {
-                log.error("Error reading next JSON token", e);
-                return false;
+                close();
+                throw new RuntimeException("Error reading next JSON token", e);
             }
         }
 
@@ -80,9 +83,18 @@ public class JSONArrayIteratorFactory<T> {
             try {
                 return jsonParser.readValueAs(clazz);
             } catch (IOException e) {
-                //TODO better-suited exception
-                throw new NoSuchElementException("Error reading current JSON object as " + clazz.getSimpleName());
+                close();
+                throw new RuntimeException("Error reading current JSON object as " + clazz.getSimpleName(), e);
             }
         }
-    };
+
+        public void close() {
+            try {
+                jsonParser.close();
+            } catch (IOException e) {
+                log.error("Problem occurred during JSonParser closing", e);
+            }
+
+        }
+    }
 }

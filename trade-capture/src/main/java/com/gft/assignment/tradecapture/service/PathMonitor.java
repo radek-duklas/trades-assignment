@@ -4,9 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +50,6 @@ public class PathMonitor implements Runnable {
                 running = false;
                 return;
             }
-
             Path dir = keys.get(key);
             if (dir == null) {
                 log.warn("Ignoring watch key for unknown location {}", key.watchable());

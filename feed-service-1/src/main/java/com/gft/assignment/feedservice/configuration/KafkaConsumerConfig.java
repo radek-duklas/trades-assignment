@@ -1,6 +1,6 @@
 package com.gft.assignment.feedservice.configuration;
 
-import com.gft.assignment.feedservice.model.TradeRecordProcessed;
+import com.gft.assignment.tradecapture.model.TradeRecordProcessed;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +29,7 @@ public class KafkaConsumerConfig {
     @Bean
     public ConsumerFactory<String, TradeRecordProcessed> consumerFactory() {
         Map<String, Object> props = new HashMap<>(kafkaConsumerConfigMap());
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.gft.assignment.tradecapture.model");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props);

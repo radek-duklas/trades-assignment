@@ -1,6 +1,6 @@
 package com.gft.assignment.feedservice.listener;
 
-import com.gft.assignment.feedservice.model.TradeRecordProcessed;
+import com.gft.assignment.tradecapture.model.TradeRecordProcessed;
 import com.gft.assignment.feedservice.service.CollectionConsumer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import java.util.List;
 public class TradeRecordsListener {
     private CollectionConsumer<TradeRecordProcessed> consumer;
 
-    @KafkaListener(topics = "${app.kafka.consumer.topic}")
+    @KafkaListener(topics = "${app.kafka.topic}")
     public void listen(List<TradeRecordProcessed> tradeRecord) {
         log.info("Received {} records", tradeRecord.size());
         consumer.accept(tradeRecord);

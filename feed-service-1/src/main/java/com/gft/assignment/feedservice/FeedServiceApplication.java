@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FeedService1Application {
+public class FeedServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FeedService1Application.class, args);
+		SpringApplication.run(FeedServiceApplication.class, args);
 	}
 
 }

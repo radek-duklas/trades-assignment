@@ -1,5 +1,5 @@
 app:
-  monitor.dir: C:\\Users\\rwds\\Desktop
+  monitor.dir: C:\\tmp\input
 
   kafka:
     admin:
@@ -7,4 +7,5 @@ app:
     producer:
       batch.size: 524288
       linger.ms: 10
+      bootstrap.servers: ${app.kafka.admin.bootstrap.servers}
     topics[TradeRecordProcessed] : trade-records
