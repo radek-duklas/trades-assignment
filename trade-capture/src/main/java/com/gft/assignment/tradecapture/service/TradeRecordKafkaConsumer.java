@@ -37,6 +37,6 @@ public class TradeRecordKafkaConsumer implements DataCollectionConsumer<TradeRec
 
     @Override
     public void consumeReplacingData(Iterator<TradeRecord> iterator) throws Exception {
-        //TODO needed?
+        throw new UnsupportedOperationException("Consuming replacement data not yet implemented");
     }
 }

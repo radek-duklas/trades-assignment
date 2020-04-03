@@ -14,8 +14,11 @@ public class PathMonitorExecutor implements CommandLineRunner {
     private PathMonitor pathMonitor;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         executorService.submit(pathMonitor);
     }
 
+    public void stop() {
+        executorService.shutdownNow();
+    }
 }

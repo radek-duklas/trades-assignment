@@ -13,6 +13,7 @@ import java.nio.file.WatchService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
@@ -39,6 +40,7 @@ public class PathMonitor implements Runnable {
         keys.put(key, dir);
     }
 
+    @Override
     public void run() {
         running = true;
         while (running) {
@@ -48,7 +50,7 @@ public class PathMonitor implements Runnable {
                 key = watcher.take();
             } catch (InterruptedException e) {
                 running = false;
-                return;
+                break;
             }
             Path dir = keys.get(key);
             if (dir == null) {
@@ -58,9 +60,10 @@ public class PathMonitor implements Runnable {
 
             List<WatchEvent<?>> watchEvents = key.pollEvents();
             log.debug("Encountered {} pending event(s) for processing", watchEvents.size());
+            //Watch service fires events really early thus making occasional IOException
+            tryWaitForIOFinish();
             processPendingEvents(dir, watchEvents);
 
-            //TODO decide whether it's needed
             // reset key and remove from set if directory no longer accessible
             boolean valid = key.reset();
             if (!valid) {
@@ -72,6 +75,16 @@ public class PathMonitor implements Runnable {
                     break;
                 }
             }
+        }
+        running = false;
+    }
+
+    private void tryWaitForIOFinish() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            log.debug("Waiting interrupted...");
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -95,9 +108,5 @@ public class PathMonitor implements Runnable {
     @SuppressWarnings("unchecked")
     private WatchEvent<Path> cast(WatchEvent<?> event) {
         return (WatchEvent<Path>) event;
-    }
-
-    public void stop() {
-        running = false;
     }
 }

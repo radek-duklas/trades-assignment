@@ -4,6 +4,8 @@ import com.gft.assignment.tradecapture.model.TradeRecord;
 import com.gft.assignment.tradecapture.model.TradeRecordProcessed;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.OffsetDateTime;
 
 @Component
@@ -20,6 +22,7 @@ public class TradeRecordConverter implements Converter<TradeRecord, TradeRecordP
         if (source.getQuantity() == null || source.getPrice() == null) {
             throw new IllegalArgumentException("Invalid data - both quantity and price must not be null");
         }
+        BigDecimal amount = source.getQuantity().setScale(2, RoundingMode.UP).multiply(source.getPrice());
         return TradeRecordProcessed.builder()
                 .accountNumber(source.getAccountNumber())
                 .broker(source.getBroker())
@@ -28,8 +31,7 @@ public class TradeRecordConverter implements Converter<TradeRecord, TradeRecordP
                 .quantity(source.getQuantity())
                 .stockCode(source.getStockCode())
                 .tradeReference(source.getTradeReference())
-                //TODO rounding, error handling
-                .amount(source.getQuantity().multiply(source.getPrice()))
+                .amount(amount)
                 .receivedTimestamp(timestamp)
                 .build();
     }

@@ -42,7 +42,6 @@ public class KafkaConfig {
         return new KafkaAdmin(configs);
     }
 
-    //TODO how to do this better
     @Bean
     public NewTopic tradeRecordsTopic() {
         return new NewTopic("trade-records", 1, (short) 1);
