@@ -1,0 +1,32 @@
+app:
+  kafka:
+    consumer:
+      bootstrap.servers: localhost:9092
+      max.poll.interval.ms: 300000
+    topic: trade-records
+    idle-between-polls: 300000
+
+  target-location: C:\\Temp\service-A
+  filename: service-A
+
+---
+spring:
+  profiles: service-A
+
+app:
+  kafka:
+    idle-between-polls: 300000
+
+  target-location: C:\\Temp\service-A
+  filename: service-A
+
+---
+spring:
+  profiles: service-B
+
+app:
+  kafka:
+    idle-between-polls: 60000
+
+  target-location: C:\\Temp\service-B
+  filename: service-B

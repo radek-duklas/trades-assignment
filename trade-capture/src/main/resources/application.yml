@@ -1,0 +1,10 @@
+app:
+  monitor.dir: C:\\Users\\rwds\\Desktop
+
+  kafka:
+    admin:
+      bootstrap.servers: localhost:9092
+    producer:
+      batch.size: 524288
+      linger.ms: 10
+    topics[TradeRecordProcessed] : trade-records

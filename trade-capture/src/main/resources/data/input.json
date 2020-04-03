@@ -1,0 +1,32 @@
+[
+  {
+    "tradeReference" : "T00001" ,
+    "accountNumber" : "1300218277" ,
+    "stockCode" : "KO" ,
+    "quantity" : "288.120000" ,
+    "currency" : "USD" ,
+    "price" : "1234.56" ,
+    "broker" : "B00123"
+  } ,
+  {
+    "tradeReference" : "T00002" ,
+    "accountNumber" : "1303218207" ,
+    "stockCode" : "KO" ,
+    "quantity" : "28.120000" ,
+    "currency" : "USD" ,
+    "price" : "123.46" ,
+    "broker" : "B00124"
+  } ,
+  {
+    "tradeReference" : "T00003" ,
+    "accountNumber" : "1300215277" ,
+    "stockCode" : "KO" ,
+    "quantity" : "288.120000" ,
+    "currency" : "USD" ,
+    "price" : "434.51" ,
+    "broker" : "B00125"
+  }
+] ,
+{
+
+}
