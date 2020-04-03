@@ -22,3 +22,12 @@ Configuration parameters are:
 - target data location and file name prefix
 - batch interval
 Both can be run simulataneousely and will receive the same data as long as their group remains the same.
+
+### Running
+To run above microservices:
+#### Trade-capture
+$ mvnw clean package spring-boot:repackage
+$ java -jar target/trade-capture.jar
+#### Feed-service
+$ mvnw clean package spring-boot:repackage
+$ java -jar target/feed-service.jar
