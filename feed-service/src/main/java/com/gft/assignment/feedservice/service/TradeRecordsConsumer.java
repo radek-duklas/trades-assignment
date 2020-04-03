@@ -35,7 +35,7 @@ public class TradeRecordsConsumer implements CollectionConsumer<TradeRecordProce
     @Override
     public void accept(Collection<TradeRecordProcessed> tradeRecords) {
         String currentTimestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("uuuu-MM-dd_HHmmssSSS"));
-        Path targetPath = location.resolve(filename + "_" + currentTimestamp);
+        Path targetPath = location.resolve(filename + "_" + currentTimestamp + ".json");
         try (OutputStream stream = Files.newOutputStream(targetPath, StandardOpenOption.CREATE)) {
             objectMapper.writeValue(stream, tradeRecords);
             log.info("Saved {} records into {}", tradeRecords.size(), targetPath);

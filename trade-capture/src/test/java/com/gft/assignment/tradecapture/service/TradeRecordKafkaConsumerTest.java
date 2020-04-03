@@ -2,7 +2,7 @@ package com.gft.assignment.tradecapture.service;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
+import com.gft.assignment.tradecapture.TestUtils;
 import com.gft.assignment.tradecapture.converter.Converter;
 import com.gft.assignment.tradecapture.model.TradeRecord;
 import com.gft.assignment.tradecapture.model.TradeRecordProcessed;
@@ -10,9 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
-
-import java.net.URL;
-import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -25,9 +22,7 @@ class TradeRecordKafkaConsumerTest {
     @Test
     void shouldConsumeAllDataFromIterator() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        ObjectReader reader = objectMapper.readerFor(TradeRecord.class);
-        URL jsonUrl = Objects.requireNonNull(this.getClass().getClassLoader().getResource("data/input.json"));
-        MappingIterator<TradeRecord> objectMappingIterator = reader.readValues(jsonUrl);
+        MappingIterator<TradeRecord> objectMappingIterator = TestUtils.iteratorFromJsonArray(objectMapper, "data/input.json");
         Converter<TradeRecord, TradeRecordProcessed> converter = mock(Converter.class);
         KafkaTemplate kafkaTemplate = mock(KafkaTemplate.class);
         String topic = "topic";
